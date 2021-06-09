@@ -1,17 +1,9 @@
-import * as prod from './configureStore.prod'
-import * as dev from './configureStore.dev'
-import getConfig from 'next/config'
-const config = getConfig()
+import rootReducer from '../features/reducers'
+import { configureStore } from '@reduxjs/toolkit'
 
-let configureStore
-let preloadedState
-console.log(config.NODE_ENV)
-if (config.NODE_ENV === 'production') {
-    configureStore = prod.configureStore
-    preloadedState = prod.preloadedState
-} else {
-    configureStore = dev.configureStore
-    preloadedState = dev.preloadedState
-}
+const store = configureStore({
+    reducer: rootReducer,
+    devTools: true
+})
 
-export {configureStore, preloadedState}
+export default store

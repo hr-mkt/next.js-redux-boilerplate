@@ -1,20 +1,17 @@
 console.log('NODE_ENV', process.env.NODE_ENV)
 const config = require('config')
 
-let nextConfig
-
-if(process.env.DEV_SERVER){
-    nextConfig = {
-        publicRuntimeConfig: config,
-        distDir: 'build',
-    }
-}else{
-    nextConfig = {
-        publicRuntimeConfig: config,
-        distDir: 'build',
-        assetPrefix: 'http://localhost:8080/out/',
+nextConfig = {
+    publicRuntimeConfig: config,
+    distDir: 'build',
+    devIndicators: {
+        autoPrerender: false,
+    },
+    trailingSlash: true,
+    webpack(config) {
+        config.resolve.modules.push(__dirname)
+        return config
     }
 }
-
 
 module.exports = nextConfig
